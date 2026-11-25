@@ -59,11 +59,12 @@ $topics = getTopicsData();
                             <select name="subject_id" class="form-select">
                                 <option value="1">Matematika Adaptif</option>
                                 <option value="2">Teknologi Web & Logika Pemrograman</option>
+                                <option value="3">Dasar Kecerdasan Buatan & Literasi Data</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Judul Topik</label>
-                            <input type="text" name="title" class="form-control" required placeholder="Contoh: Perkalian Pecahan">
+                            <input type="text" name="title" class="form-control" required placeholder="Contoh: Perkalian & Pembagian Pecahan">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tingkat Kesulitan</label>

@@ -5,6 +5,10 @@ requireRole(['admin'], '../../');
 $user = currentUser();
 $subjects = getSubjectsData();
 $topics = getTopicsData();
+$totalQuestions = 0;
+foreach ($topics as $t) {
+    $totalQuestions += count(getQuizQuestionsByTopic((int)$t['id']));
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -26,8 +30,8 @@ $topics = getTopicsData();
     <h3 class="fw-bold mb-4">Panel Administrasi Sistem & Hak Akses</h3>
     <div class="row g-3 mb-4">
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Total Pengguna</div><h4 class="fw-bold">5 Akun</h4></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Kelas Aktif</div><h4 class="fw-bold">1 Kelas (MI-3A)</h4></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Mata Pelajaran & Topik</div><h4 class="fw-bold"><?= count($subjects) ?> Mapel / <?= count($topics) ?> Topik</h4></div></div></div>
+        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Kelas Aktif</div><h4 class="fw-bold">1 Kelas (MI-2A)</h4></div></div></div>
+        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Kurikulum & Soal</div><h4 class="fw-bold"><?= count($subjects) ?> Mapel / <?= count($topics) ?> Topik / <?= $totalQuestions ?> Soal</h4></div></div></div>
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Kebijakan RBAC</div><h4 class="fw-bold text-success">Aktif</h4></div></div></div>
     </div>
 

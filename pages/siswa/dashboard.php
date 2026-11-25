@@ -12,17 +12,20 @@ foreach ($topics as $t) {
     $tid = (int)$t['id'];
     $labels[] = $t['title'];
     $scores[$tid] = $progressSession[$tid]['score'] ?? match ($tid) {
-        1 => 85,
-        2 => 50,
-        3 => 65,
-        4 => 80,
-        5 => 70,
+        1 => 86,
+        2 => 57,
+        3 => 71,
+        4 => 86,
+        5 => 71,
+        6 => 57,
+        7 => 86,
+        8 => 71,
         default => 75
     };
 }
 
-$activeTopicId = isset($progressSession[2]['score']) ? 2 : 2;
-$latestScore = $scores[$activeTopicId] ?? 50;
+$activeTopicId = 2;
+$latestScore = $scores[$activeTopicId] ?? 57;
 $avgScore = count($scores) > 0 ? (int)round(array_sum($scores) / count($scores)) : 0;
 $rule = classifyScore($latestScore);
 ?>
@@ -52,7 +55,7 @@ $rule = classifyScore($latestScore);
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold mb-0">Dashboard Perkembangan & Rekomendasi Belajar</h3>
-            <small class="text-muted">Pemetaan kompetensi <?= count($topics) ?> topik, jalur belajar adaptif, dan akses pembelajaran terstruktur</small>
+            <small class="text-muted">Pemetaan kompetensi <?= count($topics) ?> topik lintas 3 mata pelajaran secara adaptif</small>
         </div>
         <div class="d-flex gap-2 mt-2 mt-md-0">
             <a href="materi.php" class="btn btn-outline-primary">Buka Materi</a>
@@ -63,20 +66,20 @@ $rule = classifyScore($latestScore);
     <div class="row g-3 mb-4">
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Total Topik Tersedia</div><h4 class="fw-bold"><?= count($topics) ?> Topik</h4></div></div></div>
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Rata-rata Nilai</div><h4 class="fw-bold text-primary"><?= $avgScore ?></h4></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Status Topik Utama</div><span class="badge bg-<?= $rule['badge_class'] ?> fs-6 mt-1"><?= htmlspecialchars($rule['status_label']) ?></span></div></div></div>
+        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Status Topik Prioritas</div><span class="badge bg-<?= $rule['badge_class'] ?> fs-6 mt-1"><?= htmlspecialchars($rule['status_label']) ?></span></div></div></div>
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Rekomendasi Saat Ini</div><h6 class="fw-bold mt-1 mb-0"><?= htmlspecialchars($rule['recommendation_title']) ?></h6></div></div></div>
     </div>
 
     <div class="row g-4">
-        <div class="col-lg-6">
+        <div class="col-lg-7">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white fw-bold">Grafik Penguasaan Kompetensi per Topik</div>
                 <div class="card-body">
-                    <canvas id="siswaProgressChart" height="190"></canvas>
+                    <canvas id="siswaProgressChart" height="200"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white fw-bold">Rekomendasi Belajar Adaptif (Aturan Skor Awal)</div>
                 <div class="card-body">

@@ -71,7 +71,7 @@ $questions = getQuizQuestionsByTopic($topicId);
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white fw-bold">Hasil Evaluasi, Pemetaan & Rekomendasi</div>
                 <div class="card-body" id="resultPanel">
-                    <p class="text-muted small mb-0">Kerjakan soal di sebelah kiri lalu kirim jawaban untuk melihat skor, status penguasaan, pembahasan tiap soal, dan rekomendasi jalur belajar.</p>
+                    <p class="text-muted small mb-0">Kerjakan <?= count($questions) ?> soal di sebelah kiri lalu kirim jawaban untuk melihat skor, status penguasaan, pembahasan tiap soal, dan rekomendasi jalur belajar.</p>
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@ document.getElementById('quizForm').addEventListener('submit', async (e) => {
     const res = await fetch('../../api/evaluate_quiz.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic_id: <?= $topicId ?>, answers })
+        body: JSON.stringify({ topic_id: <?= $topicId ?>, duration_seconds: seconds, answers })
     });
     const data = await res.json();
 

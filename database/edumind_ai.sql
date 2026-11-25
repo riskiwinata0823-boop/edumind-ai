@@ -151,18 +151,22 @@ INSERT IGNORE INTO users (id, name, email, password_hash, role, status) VALUES
 (5, 'Raffi Aditya H.', 'raffi@edumind.polinela.ac.id', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'siswa', 'aktif');
 
 INSERT IGNORE INTO classes (id, class_name, academic_year, teacher_id, description) VALUES
-(1, 'MI-3A Adaptif Lab', '2026/2027', 2, 'Kelas praktikum dan uji coba pembelajaran adaptif EduMind AI.');
+(1, 'MI-2A Adaptif Lab', '2026/2027', 2, 'Kelas praktikum dan uji coba pembelajaran adaptif EduMind AI.');
 
 INSERT IGNORE INTO class_student (class_id, student_id) VALUES
 (1, 3), (1, 4), (1, 5);
 
 INSERT IGNORE INTO subjects (id, class_id, code, name, description) VALUES
-(1, 1, 'MAT-101', 'Matematika', 'Pemahaman konsep bilangan pecahan, operasi hitung, persentase, dan aljabar dasar secara adaptif.'),
-(2, 1, 'WEB-201', 'Teknologi Web & Logika Pemrograman', 'Pengembangan aplikasi web modern, struktur data, validasi HTTP/API, dan logika evaluasi terstruktur.');
+(1, 1, 'MAT-101', 'Matematika Adaptif', 'Pemahaman konsep bilangan pecahan, operasi hitung, persentase, perbandingan, dan aljabar dasar secara adaptif.'),
+(2, 1, 'WEB-201', 'Teknologi Web & Logika Pemrograman', 'Pengembangan aplikasi web modern, struktur HTML/CSS, alur HTTP/API, autentikasi RBAC, dan basis data relasional.'),
+(3, 1, 'AI-301', 'Dasar Kecerdasan Buatan & Literasi Data', 'Pengenalan konsep pembelajaran mesin, aturan adaptif, pemrosesan bahasa alami, dan etika privasi data.');
 
 INSERT IGNORE INTO topics (id, subject_id, prerequisite_topic_id, title, learning_objectives, difficulty_level, mastery_threshold, order_index) VALUES
-(1, 1, NULL, 'Konsep Dasar Pecahan', 'Memahami makna pembilang dan penyebut sebagai bagian dari keseluruhan serta pecahan senilai.', 'dasar', 80, 1),
-(2, 1, 1, 'Operasi Penjumlahan Pecahan', 'Menyelesaikan penjumlahan pecahan berpenyebut sama maupun berbeda menggunakan KPK.', 'menengah', 80, 2),
-(3, 1, 2, 'Persentase dan Perbandingan', 'Mengonversi pecahan ke bentuk persentase dan membandingkan nilai antar-topik.', 'lanjut', 80, 3),
-(4, 2, NULL, 'Dasar HTML, CSS & Struktur Web', 'Memahami struktur dokumen semantik, tata letak responsif, dan pemisahan presentasi.', 'dasar', 80, 1),
-(5, 2, 4, 'Logika Pemrograman, API & Basis Data', 'Memahami alur request-response, validasi data, kode status HTTP, dan relasi tabel.', 'menengah', 80, 2);
+(1, 1, NULL, 'Konsep Dasar Pecahan', 'Memahami makna pembilang dan penyebut sebagai bagian dari keseluruhan serta mengidentifikasi pecahan senilai.', 'dasar', 80, 1),
+(2, 1, 1, 'Operasi Penjumlahan & Pengurangan Pecahan', 'Menyelesaikan operasi penjumlahan dan pengurangan pecahan berpenyebut sama maupun berbeda menggunakan KPK.', 'menengah', 80, 2),
+(3, 1, 2, 'Persentase, Desimal & Perbandingan', 'Mengonversi pecahan ke bentuk persentase maupun desimal serta membandingkan nilai antar-pecahan.', 'lanjut', 80, 3),
+(4, 2, NULL, 'Dasar HTML Semantik & CSS Responsif', 'Memahami struktur dokumen HTML semantik, tata letak Flexbox/Grid, dan desain responsif lintas perangkat.', 'dasar', 80, 1),
+(5, 2, 4, 'Arsitektur API, JSON & Status HTTP', 'Memahami alur request-response JSON, metode HTTP, validasi sisi server, dan pembatasan hak akses (RBAC).', 'menengah', 80, 2),
+(6, 2, 5, 'Perancangan Basis Data Relasional & Normalisasi', 'Memahami Primary Key, Foreign Key, relasi antar-tabel, dan bentuk normalisasi 1NF–3NF untuk mencegah anomali data.', 'lanjut', 80, 3),
+(7, 3, NULL, 'Konsep Dasar AI & Pembelajaran Adaptif', 'Memahami perbedaan sistem statis dan adaptif, klasifikasi aturan skor, serta peran pendampingan guru.', 'dasar', 80, 1),
+(8, 3, 7, 'Prompt Engineering, Konteks Kurikulum & Etika AI', 'Menerapkan penyusunan prompt berbasis konteks materi ajar, mitigasi halusinasi, serta perlindungan privasi data siswa.', 'menengah', 80, 2);

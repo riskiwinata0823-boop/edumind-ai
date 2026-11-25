@@ -1,6 +1,15 @@
 <?php
 require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/learning_data.php';
 $user = currentUser();
+$subjects = getSubjectsData();
+$topics = getTopicsData();
+$totalMaterials = 0;
+$totalQuestions = 0;
+foreach ($topics as $t) {
+    $totalMaterials += count($t['materials']);
+    $totalQuestions += count(getQuizQuestionsByTopic((int)$t['id']));
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -35,12 +44,12 @@ $user = currentUser();
                 <span class="badge rounded-pill bg-info text-dark mb-3">Pembelajaran Adaptif Berbasis AI</span>
                 <h1 class="display-5 fw-bold mb-3">Belajar Sesuai Pemahaman dan Progres Nyata Setiap Siswa</h1>
                 <p class="lead text-light opacity-90 mb-4">
-                    EduMind AI memetakan penguasaan kompetensi per topik, menyusun rekomendasi jalur belajar adaptif, serta menyediakan Asisten Belajar AI berbasis materi kurikulum dengan kendali dan pemantauan guru.
+                    EduMind AI memetakan penguasaan kompetensi pada <?= count($subjects) ?> mata pelajaran dan <?= count($topics) ?> topik (<?= $totalMaterials ?> materi terstruktur & <?= $totalQuestions ?> soal kuis adaptif), menyusun rekomendasi jalur belajar, serta menyediakan Asisten Belajar AI berbasis kurikulum.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="login.php" class="btn btn-primary btn-lg px-4">Masuk ke Platform</a>
                     <a href="register.php" class="btn btn-outline-light btn-lg px-4">Daftar Akun Siswa</a>
-                    <a href="docs/ROADMAP_EDUMIND_AI.md" class="btn btn-outline-info btn-lg px-4">Lihat Roadmap 15 Fase</a>
+                    <a href="docs/ROADMAP_EDUMIND_AI.md" class="btn btn-outline-info btn-lg px-4">Lihat Roadmap</a>
                 </div>
             </div>
             <div class="col-lg-5">
@@ -49,15 +58,15 @@ $user = currentUser();
                         <h5 class="fw-bold mb-3">Tiga Peran Utama Sistem</h5>
                         <div class="mb-3">
                             <span class="badge bg-danger me-2">Administrator</span>
-                            <span class="small text-muted">Kelola akun, kelas, mata pelajaran, dan konfigurasi sistem.</span>
+                            <span class="small text-muted">Kelola akun, kelas, mata pelajaran, dan konfigurasi hak akses RBAC.</span>
                         </div>
                         <div class="mb-3">
                             <span class="badge bg-success me-2">Guru</span>
-                            <span class="small text-muted">Kelola topik, materi, soal kuis, dan pantau perkembangan kelas.</span>
+                            <span class="small text-muted">Kelola topik, materi, bank soal kuis, dan pantau perkembangan kelas.</span>
                         </div>
                         <div>
                             <span class="badge bg-primary me-2">Siswa</span>
-                            <span class="small text-muted">Akses materi, kuis adaptif, rekomendasi belajar, dan Asisten AI.</span>
+                            <span class="small text-muted">Akses <?= $totalMaterials ?> materi, <?= $totalQuestions ?> soal kuis adaptif, rekomendasi belajar, dan Asisten AI.</span>
                         </div>
                     </div>
                 </div>
@@ -68,32 +77,19 @@ $user = currentUser();
 
 <section class="py-5">
     <div class="container">
-        <h2 class="fw-bold text-center mb-4">Fitur Inti EduMind AI</h2>
+        <h2 class="fw-bold text-center mb-4">Kurikulum & Fitur Inti EduMind AI</h2>
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Pemetaan Kompetensi & Rekomendasi</h5>
-                        <p class="text-muted small mb-0">Menganalisis hasil latihan dan kuis untuk mengarahkan siswa ke materi dasar, penguatan, atau topik lanjutan secara terukur.</p>
+            <?php foreach ($subjects as $sub): ?>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <span class="badge bg-secondary mb-2"><?= htmlspecialchars($sub['code']) ?></span>
+                            <h5 class="fw-bold text-primary"><?= htmlspecialchars($sub['name']) ?></h5>
+                            <p class="text-muted small mb-0"><?= htmlspecialchars($sub['description']) ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <h5 class="fw-bold text-success">Asisten Belajar AI Terarah</h5>
-                        <p class="text-muted small mb-0">Menyederhanakan penjelasan materi, memberi contoh soal, dan membahas kesalahan berdasarkan materi yang disusun guru.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <h5 class="fw-bold text-warning">Dashboard Perkembangan & Analitik</h5>
-                        <p class="text-muted small mb-0">Menyajikan grafik progres belajar siswa serta ringkasan capaian kelas dan topik sulit bagi guru.</p>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>

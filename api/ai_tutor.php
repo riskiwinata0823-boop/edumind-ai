@@ -8,7 +8,7 @@ $mode = trim((string)($input['mode'] ?? 'jelaskan'));
 $topicId = isset($input['topic_id']) ? (int)$input['topic_id'] : 2;
 
 $topics = getTopicsData();
-$activeTopic = $topics[1];
+$activeTopic = $topics[0];
 foreach ($topics as $t) {
     if ((int)$t['id'] === $topicId) {
         $activeTopic = $t;
@@ -25,16 +25,32 @@ $firstMaterial = $activeTopic['materials'][0] ?? [
 $lower = strtolower($message);
 $prefix = "[Konteks Materi: {$activeTopic['subject_name']} — {$activeTopic['title']}]\n";
 
-if ($mode === 'sederhana' || str_contains($lower, 'sederhana') || str_contains($lower, 'pizza')) {
-    $body = "Penjelasan sederhana: Bayangkan 1 loyang pizza dibagi menjadi 4 bagian sama besar (penyebut = 4). Jika kamu mengambil 1 potong, bagianmu adalah 1/4. Untuk menjumlahkan 1/2 + 1/4, samakan dulu potongan menjadi per-4 (1/2 = 2/4), lalu jumlahkan: 2/4 + 1/4 = 3/4.";
+if ($mode === 'sederhana' || str_contains($lower, 'sederhana') || str_contains($lower, 'analogi')) {
+    if ((int)$activeTopic['subject_id'] === 1) {
+        $body = "Penjelasan sederhana: Bayangkan 1 loyang pizza dibagi menjadi 4 potong sama besar (penyebut = 4). Mengambil 1 potong berarti 1/4. Jika ingin menjumlahkan 1/2 + 1/4, samakan ukuran potongannya menjadi per-4 (1/2 = 2/4), sehingga 2/4 + 1/4 = 3/4.";
+    } elseif ((int)$activeTopic['subject_id'] === 2) {
+        $body = "Penjelasan sederhana: Bayangkan aplikasi web seperti restoran. HTML adalah kerangka bangunannya, CSS adalah dekorasi tata ruangnya, API JSON adalah pelayan yang mengantar pesanan data antara pengunjung (browser) dan dapur (server/database MySQL).";
+    } else {
+        $body = "Penjelasan sederhana: Sistem adaptif bekerja seperti pelatih pribadi—jika kamu masih kesulitan pada materi dasar, pelatih memberi latihan pondasi dulu; jika sudah mahir, pelatih menaikkan tantangan ke tahap berikutnya.";
+    }
 } elseif ($mode === 'contoh_soal' || str_contains($lower, 'contoh') || str_contains($lower, 'soal')) {
-    $body = "Contoh soal latihan: Hitunglah 1/3 + 1/6. KPK dari 3 dan 6 adalah 6, maka 1/3 = 2/6. Hasilnya: 2/6 + 1/6 = 3/6 = 1/2.";
+    $qs = getQuizQuestionsByTopic((int)$activeTopic['id']);
+    $sample = $qs[0] ?? null;
+    if ($sample) {
+        $body = "Contoh soal latihan: " . $sample['question'] . "\nPembahasan: " . $sample['explanation'];
+    } else {
+        $body = "Contoh latihan: Pelajari ringkasan materi berikut lalu uji pemahaman Anda pada menu Kuis Adaptif.";
+    }
 } elseif ($mode === 'bahas_salah' || str_contains($lower, 'salah') || str_contains($lower, 'keliru')) {
-    $body = "Pembahasan kesalahan umum: Menjumlahkan pembilang dengan pembilang dan penyebut dengan penyebut (misal 1/2 + 1/4 = 2/6) tidak tepat karena besar tiap bagian berbeda. Selalu samakan penyebut menggunakan KPK terlebih dahulu.";
-} elseif (str_contains($lower, 'kpk') || str_contains($lower, 'penyebut') || str_contains($lower, 'pembilang')) {
-    $body = "Pembilang berada di atas (menunjukkan bagian yang diambil) dan penyebut di bawah (menunjukkan total bagian sama besar). Untuk menjumlahkan pecahan berpenyebut berbeda, cari KPK penyebut terlebih dahulu.";
+    if ((int)$activeTopic['subject_id'] === 1) {
+        $body = "Kesalahan umum yang sering terjadi: Menjumlahkan pembilang dengan pembilang dan penyebut dengan penyebut (misal 1/2 + 1/4 = 2/6). Langkah yang benar adalah menyamakan penyebut lewat KPK terlebih dahulu menjadi 2/4 + 1/4 = 3/4.";
+    } elseif ((int)$activeTopic['subject_id'] === 2) {
+        $body = "Kesalahan umum yang sering terjadi: Mengandalkan validasi hanya di frontend atau tidak memisahkan Primary Key dan Foreign Key dengan benar, sehingga berisiko menimbulkan anomali data atau celah akses.";
+    } else {
+        $body = "Kesalahan umum yang sering terjadi: Menganggap jawaban AI sebagai kebenaran mutlak tanpa memeriksa kesesuaiannya dengan materi kurikulum atau mengirim data pribadi siswa ke layanan eksternal.";
+    }
 } else {
-    $body = $firstMaterial['content'] . " Ringkasannya: " . $firstMaterial['summary'];
+    $body = $firstMaterial['content'] . "\nRingkasan Kunci: " . $firstMaterial['summary'];
 }
 
 echo json_encode([

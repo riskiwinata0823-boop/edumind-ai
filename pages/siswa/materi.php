@@ -75,7 +75,7 @@ foreach ($topics as $t) {
             <?php endforeach; ?>
 
             <div class="d-flex flex-wrap gap-2 mt-3">
-                <a href="kuis.php?topic_id=<?= (int)$activeTopic['id'] ?>" class="btn btn-primary">Lanjut ke Kuis Topik Ini</a>
+                <a href="kuis.php?topic_id=<?= (int)$activeTopic['id'] ?>" class="btn btn-primary">Lanjut ke Kuis Topik Ini (<?= count(getQuizQuestionsByTopic((int)$activeTopic['id'])) ?> Soal)</a>
                 <a href="asisten_ai.php?topic_id=<?= (int)$activeTopic['id'] ?>" class="btn btn-outline-success">Diskusikan dengan Asisten AI</a>
             </div>
         </div>

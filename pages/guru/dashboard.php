@@ -4,6 +4,10 @@ require_once __DIR__ . '/../../includes/learning_data.php';
 requireRole(['guru'], '../../');
 $user = currentUser();
 $topics = getTopicsData();
+$totalQuestions = 0;
+foreach ($topics as $t) {
+    $totalQuestions += count(getQuizQuestionsByTopic((int)$t['id']));
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -31,8 +35,8 @@ $topics = getTopicsData();
 
     <div class="row g-3 mb-4">
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Jumlah Siswa</div><h4 class="fw-bold">3 Siswa</h4></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Topik Tersedia</div><h4 class="fw-bold text-primary"><?= count($topics) ?> Topik</h4></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Topik Paling Sulit</div><h6 class="fw-bold text-danger mt-1">Operasi Penjumlahan Pecahan</h6></div></div></div>
+        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Topik & Bank Soal</div><h4 class="fw-bold text-primary"><?= count($topics) ?> Topik / <?= $totalQuestions ?> Soal</h4></div></div></div>
+        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Topik Paling Sulit</div><h6 class="fw-bold text-danger mt-1">Operasi Penjumlahan & Pengurangan Pecahan</h6></div></div></div>
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Butuh Penguatan</div><h4 class="fw-bold text-warning">1 Siswa</h4></div></div></div>
     </div>
 
@@ -41,7 +45,7 @@ $topics = getTopicsData();
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white fw-bold">Grafik Rata-rata Nilai per Topik</div>
                 <div class="card-body">
-                    <canvas id="classChart" height="160"></canvas>
+                    <canvas id="classChart" height="170"></canvas>
                 </div>
             </div>
         </div>
@@ -55,7 +59,7 @@ $topics = getTopicsData();
                             <span class="badge bg-danger">Belum Menguasai</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div><strong>Putri Aulia R.</strong><br><span class="text-muted">Topik: Konsep Dasar Pecahan (Skor 84)</span></div>
+                            <div><strong>Putri Aulia R.</strong><br><span class="text-muted">Topik: Konsep Dasar Pecahan (Skor 86)</span></div>
                             <span class="badge bg-success">Menguasai</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -72,11 +76,11 @@ $topics = getTopicsData();
 new Chart(document.getElementById('classChart'), {
     type: 'bar',
     data: {
-        labels: ['Konsep Dasar Pecahan', 'Penjumlahan Pecahan', 'Persentase & Perbandingan', 'Dasar HTML & CSS', 'Logika, API & DB'],
+        labels: ['Konsep Pecahan', 'Penjumlahan Pecahan', 'Persentase & Desimal', 'HTML & CSS', 'API & HTTP', 'Basis Data & 3NF', 'Konsep AI Adaptif', 'Prompt & Etika AI'],
         datasets: [{
             label: 'Rata-rata Nilai Kelas',
-            data: [84, 58, 72, 82, 76],
-            backgroundColor: ['#198754', '#dc3545', '#ffc107', '#198754', '#ffc107']
+            data: [86, 58, 72, 84, 76, 68, 82, 78],
+            backgroundColor: ['#198754', '#dc3545', '#ffc107', '#198754', '#ffc107', '#ffc107', '#198754', '#ffc107']
         }]
     },
     options: { scales: { y: { beginAtZero: true, max: 100 } } }
