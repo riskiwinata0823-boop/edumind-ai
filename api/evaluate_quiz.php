@@ -57,14 +57,7 @@ if ($pdo && $user && !empty($user['id'])) {
     try {
         $uid = (int)$user['id'];
         $stmtAttempt = $pdo->prepare("INSERT INTO attempts (user_id, topic_id, score, correct_count, total_questions, duration_seconds) VALUES (:uid, :tid, :score, :correct, :total, :dur)");
-        $stmtAttempt->execute([
-            'uid' => $uid,
-            'tid' => $topicId,
-            'score' => $score,
-            'correct' => $correctCount,
-            'total' => $totalQuestions,
-            'dur' => $durationSeconds
-        ]);
+        $stmtAttempt->execute(['uid' => $uid, 'tid' => $topicId, 'score' => $score, 'correct' => $correctCount, 'total' => $totalQuestions, 'dur' => $durationSeconds]);
 
         $stmtProg = $pdo->prepare("
             INSERT INTO progress (user_id, topic_id, best_score, latest_score, attempts_count, materials_completed, mastery_status)
@@ -75,22 +68,10 @@ if ($pdo && $user && !empty($user['id'])) {
                 attempts_count = attempts_count + 1,
                 mastery_status = VALUES(mastery_status)
         ");
-        $stmtProg->execute([
-            'uid' => $uid,
-            'tid' => $topicId,
-            'score' => $score,
-            'status' => $rule['status_key']
-        ]);
+        $stmtProg->execute(['uid' => $uid, 'tid' => $topicId, 'score' => $score, 'status' => $rule['status_key']]);
 
         $stmtRec = $pdo->prepare("INSERT INTO recommendations (user_id, source_topic_id, recommendation_type, title, reason, action_plan) VALUES (:uid, :tid, :rtype, :title, :reason, :plan)");
-        $stmtRec->execute([
-            'uid' => $uid,
-            'tid' => $topicId,
-            'rtype' => $rule['recommendation_type'],
-            'title' => $rule['recommendation_title'],
-            'reason' => $rule['reason'],
-            'plan' => $rule['action_plan']
-        ]);
+        $stmtRec->execute(['uid' => $uid, 'tid' => $topicId, 'rtype' => $rule['recommendation_type'], 'title' => $rule['recommendation_title'], 'reason' => $rule['reason'], 'plan' => $rule['action_plan']]);
         $dbSaved = true;
     } catch (Throwable $e) {
         $dbSaved = false;

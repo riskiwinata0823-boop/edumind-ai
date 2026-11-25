@@ -16,23 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($pdo) {
             try {
                 $stmt = $pdo->prepare("INSERT INTO users (name, email, password_hash, role, status) VALUES (:name, :email, :hash, 'siswa', 'aktif')");
-                $stmt->execute([
-                    'name' => $name,
-                    'email' => $email,
-                    'hash' => password_hash($password, PASSWORD_BCRYPT)
-                ]);
+                $stmt->execute(['name' => $name, 'email' => $email, 'hash' => password_hash($password, PASSWORD_BCRYPT)]);
                 $message = 'Registrasi berhasil! Silakan login menggunakan email dan kata sandi Anda.';
             } catch (Throwable $e) {
                 $error = 'Gagal mendaftar: email mungkin sudah terdaftar atau database belum siap.';
             }
         } else {
-            $_SESSION['user'] = [
-                'id' => 99,
-                'name' => $name,
-                'email' => $email,
-                'role' => 'siswa',
-                'status' => 'aktif'
-            ];
+            $_SESSION['user'] = ['id' => 99, 'name' => $name, 'email' => $email, 'role' => 'siswa', 'status' => 'aktif'];
             header('Location: pages/siswa/dashboard.php');
             exit;
         }
@@ -57,23 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if ($error): ?><div class="alert alert-danger small"><?= htmlspecialchars($error) ?></div><?php endif; ?>
                     <?php if ($message): ?><div class="alert alert-success small"><?= htmlspecialchars($message) ?></div><?php endif; ?>
                     <form method="POST">
-                        <div class="mb-3">
-                            <label class="form-label">Nama Lengkap</label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Kata Sandi (min. 6 karakter)</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
+                        <div class="mb-3"><label class="form-label">Nama Lengkap</label><input type="text" name="name" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label">Email</label><input type="email" name="email" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label">Kata Sandi (min. 6 karakter)</label><input type="password" name="password" class="form-control" required></div>
                         <button type="submit" class="btn btn-success w-100">Daftar Akun Siswa</button>
                     </form>
-                    <div class="mt-3 small text-center">
-                        Sudah punya akun? <a href="login.php">Login di sini</a>
-                    </div>
+                    <div class="mt-3 small text-center">Sudah punya akun? <a href="login.php">Login di sini</a></div>
                 </div>
             </div>
         </div>

@@ -62,31 +62,14 @@ $topics = getTopicsData();
                                 <option value="3">Dasar Kecerdasan Buatan & Literasi Data</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Judul Topik</label>
-                            <input type="text" name="title" class="form-control" required placeholder="Contoh: Perkalian & Pembagian Pecahan">
-                        </div>
+                        <div class="mb-3"><label class="form-label">Judul Topik</label><input type="text" name="title" class="form-control" required placeholder="Contoh: Perkalian & Pembagian Pecahan"></div>
                         <div class="mb-3">
                             <label class="form-label">Tingkat Kesulitan</label>
-                            <select name="difficulty_level" class="form-select">
-                                <option value="dasar">Dasar</option>
-                                <option value="menengah" selected>Menengah</option>
-                                <option value="lanjut">Lanjut</option>
-                            </select>
+                            <select name="difficulty_level" class="form-select"><option value="dasar">Dasar</option><option value="menengah" selected>Menengah</option><option value="lanjut">Lanjut</option></select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tujuan Pembelajaran</label>
-                            <textarea name="learning_objectives" class="form-control" rows="2" placeholder="Kompetensi yang ingin dicapai siswa..."></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Judul Materi & Isi Materi</label>
-                            <input type="text" name="material_title" class="form-control mb-2" placeholder="Judul materi...">
-                            <textarea name="material_content" class="form-control" rows="3" placeholder="Uraian materi pembelajaran..."></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Ringkasan Kunci</label>
-                            <input type="text" name="summary_notes" class="form-control" placeholder="Poin ringkas materi...">
-                        </div>
+                        <div class="mb-3"><label class="form-label">Tujuan Pembelajaran</label><textarea name="learning_objectives" class="form-control" rows="2"></textarea></div>
+                        <div class="mb-3"><label class="form-label">Judul Materi & Isi Materi</label><input type="text" name="material_title" class="form-control mb-2" placeholder="Judul materi..."><textarea name="material_content" class="form-control" rows="3" placeholder="Uraian materi..."></textarea></div>
+                        <div class="mb-3"><label class="form-label">Ringkasan Kunci</label><input type="text" name="summary_notes" class="form-control"></div>
                         <button type="submit" class="btn btn-success w-100">Simpan Topik & Materi</button>
                     </form>
                 </div>
@@ -99,18 +82,12 @@ $topics = getTopicsData();
                     <?php foreach ($topics as $t): ?>
                         <div class="border rounded p-3 mb-3 bg-white">
                             <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <span class="badge bg-secondary mb-1"><?= htmlspecialchars($t['subject_name']) ?></span>
-                                    <h6 class="fw-bold mb-1"><?= htmlspecialchars($t['title']) ?></h6>
-                                </div>
+                                <div><span class="badge bg-secondary mb-1"><?= htmlspecialchars($t['subject_name']) ?></span><h6 class="fw-bold mb-1"><?= htmlspecialchars($t['title']) ?></h6></div>
                                 <span class="badge bg-info text-dark"><?= htmlspecialchars($t['difficulty_level']) ?></span>
                             </div>
                             <p class="small text-muted mb-2"><strong>Tujuan:</strong> <?= htmlspecialchars($t['learning_objectives']) ?></p>
                             <?php foreach ($t['materials'] as $m): ?>
-                                <div class="bg-light rounded p-2 mb-2 small">
-                                    <strong><?= htmlspecialchars($m['title']) ?></strong> (<?= (int)$m['estimated_minutes'] ?> mnt):<br>
-                                    <?= htmlspecialchars($m['content']) ?>
-                                </div>
+                                <div class="bg-light rounded p-2 mb-2 small"><strong><?= htmlspecialchars($m['title']) ?></strong> (<?= (int)$m['estimated_minutes'] ?> mnt):<br><?= htmlspecialchars($m['content']) ?></div>
                             <?php endforeach; ?>
                         </div>
                     <?php endforeach; ?>

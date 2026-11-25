@@ -12,20 +12,12 @@ foreach ($topics as $t) {
     $tid = (int)$t['id'];
     $labels[] = $t['title'];
     $scores[$tid] = $progressSession[$tid]['score'] ?? match ($tid) {
-        1 => 86,
-        2 => 57,
-        3 => 71,
-        4 => 86,
-        5 => 71,
-        6 => 57,
-        7 => 86,
-        8 => 71,
-        default => 75
+        1 => 88, 2 => 56, 3 => 72, 4 => 84, 5 => 72, 6 => 56, 7 => 88, 8 => 72, default => 76
     };
 }
 
 $activeTopicId = 2;
-$latestScore = $scores[$activeTopicId] ?? 57;
+$latestScore = $scores[$activeTopicId] ?? 56;
 $avgScore = count($scores) > 0 ? (int)round(array_sum($scores) / count($scores)) : 0;
 $rule = classifyScore($latestScore);
 ?>
@@ -59,7 +51,7 @@ $rule = classifyScore($latestScore);
         </div>
         <div class="d-flex gap-2 mt-2 mt-md-0">
             <a href="materi.php" class="btn btn-outline-primary">Buka Materi</a>
-            <a href="kuis.php" class="btn btn-primary">Kerjakan Kuis</a>
+            <a href="kuis.php" class="btn btn-primary">Kerjakan Kuis (25 Soal/Topik)</a>
         </div>
     </div>
 
@@ -74,9 +66,7 @@ $rule = classifyScore($latestScore);
         <div class="col-lg-7">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white fw-bold">Grafik Penguasaan Kompetensi per Topik</div>
-                <div class="card-body">
-                    <canvas id="siswaProgressChart" height="200"></canvas>
-                </div>
+                <div class="card-body"><canvas id="siswaProgressChart" height="200"></canvas></div>
             </div>
         </div>
         <div class="col-lg-5">
@@ -104,14 +94,7 @@ const chartColors = chartValues.map(v => v >= 80 ? '#198754' : (v >= 60 ? '#ffc1
 
 new Chart(document.getElementById('siswaProgressChart'), {
     type: 'bar',
-    data: {
-        labels: chartLabels,
-        datasets: [{
-            label: 'Nilai / Penguasaan (%)',
-            data: chartValues,
-            backgroundColor: chartColors
-        }]
-    },
+    data: { labels: chartLabels, datasets: [{ label: 'Nilai / Penguasaan (%)', data: chartValues, backgroundColor: chartColors }] },
     options: { scales: { y: { beginAtZero: true, max: 100 } } }
 });
 </script>

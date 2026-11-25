@@ -7,46 +7,11 @@ require_once __DIR__ . '/../config/database.php';
 
 function demoUsers(): array {
     return [
-        [
-            'id' => 1,
-            'name' => 'Administrator EduMind',
-            'email' => 'admin@edumind.polinela.ac.id',
-            'password' => 'password123',
-            'role' => 'admin',
-            'status' => 'aktif'
-        ],
-        [
-            'id' => 2,
-            'name' => 'Razzi Ronaldi (Guru)',
-            'email' => 'guru@edumind.polinela.ac.id',
-            'password' => 'password123',
-            'role' => 'guru',
-            'status' => 'aktif'
-        ],
-        [
-            'id' => 3,
-            'name' => 'Riski Winata',
-            'email' => 'riski@edumind.polinela.ac.id',
-            'password' => 'password123',
-            'role' => 'siswa',
-            'status' => 'aktif'
-        ],
-        [
-            'id' => 4,
-            'name' => 'Putri Aulia R.',
-            'email' => 'putri@edumind.polinela.ac.id',
-            'password' => 'password123',
-            'role' => 'siswa',
-            'status' => 'aktif'
-        ],
-        [
-            'id' => 5,
-            'name' => 'Raffi Aditya H.',
-            'email' => 'raffi@edumind.polinela.ac.id',
-            'password' => 'password123',
-            'role' => 'siswa',
-            'status' => 'aktif'
-        ],
+        ['id' => 1, 'name' => 'Administrator EduMind', 'email' => 'admin@edumind.polinela.ac.id', 'password' => 'password123', 'role' => 'admin', 'status' => 'aktif'],
+        ['id' => 2, 'name' => 'Razzi Ronaldi (Guru)', 'email' => 'guru@edumind.polinela.ac.id', 'password' => 'password123', 'role' => 'guru', 'status' => 'aktif'],
+        ['id' => 3, 'name' => 'Riski Winata', 'email' => 'riski@edumind.polinela.ac.id', 'password' => 'password123', 'role' => 'siswa', 'status' => 'aktif'],
+        ['id' => 4, 'name' => 'Putri Aulia R.', 'email' => 'putri@edumind.polinela.ac.id', 'password' => 'password123', 'role' => 'siswa', 'status' => 'aktif'],
+        ['id' => 5, 'name' => 'Raffi Aditya H.', 'email' => 'raffi@edumind.polinela.ac.id', 'password' => 'password123', 'role' => 'siswa', 'status' => 'aktif'],
     ];
 }
 
@@ -61,9 +26,7 @@ function authenticateUser(string $email, string $password): ?array {
                 unset($user['password_hash']);
                 return $user;
             }
-        } catch (Throwable $e) {
-            // Fallback ke akun demo
-        }
+        } catch (Throwable $e) {}
     }
 
     foreach (demoUsers() as $u) {

@@ -67,9 +67,7 @@ foreach ($topics as $t) {
                     </div>
                     <div class="card-body">
                         <p style="line-height:1.75"><?= htmlspecialchars($mat['content']) ?></p>
-                        <div class="alert alert-info mb-0 py-2 small">
-                            <strong>Ringkasan Kunci:</strong> <?= htmlspecialchars($mat['summary']) ?>
-                        </div>
+                        <div class="alert alert-info mb-0 py-2 small"><strong>Ringkasan Kunci:</strong> <?= htmlspecialchars($mat['summary']) ?></div>
                     </div>
                 </div>
             <?php endforeach; ?>

@@ -44,9 +44,7 @@ foreach ($topics as $t) {
         <div class="col-lg-7">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white fw-bold">Grafik Rata-rata Nilai per Topik</div>
-                <div class="card-body">
-                    <canvas id="classChart" height="170"></canvas>
-                </div>
+                <div class="card-body"><canvas id="classChart" height="170"></canvas></div>
             </div>
         </div>
         <div class="col-lg-5">
@@ -55,11 +53,11 @@ foreach ($topics as $t) {
                 <div class="card-body">
                     <ul class="list-group list-group-flush small">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div><strong>Riski Winata</strong><br><span class="text-muted">Topik: Operasi Penjumlahan Pecahan (Skor 50)</span></div>
+                            <div><strong>Riski Winata</strong><br><span class="text-muted">Topik: Operasi Penjumlahan Pecahan (Skor 52)</span></div>
                             <span class="badge bg-danger">Belum Menguasai</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div><strong>Putri Aulia R.</strong><br><span class="text-muted">Topik: Konsep Dasar Pecahan (Skor 86)</span></div>
+                            <div><strong>Putri Aulia R.</strong><br><span class="text-muted">Topik: Konsep Dasar Pecahan (Skor 88)</span></div>
                             <span class="badge bg-success">Menguasai</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -79,7 +77,7 @@ new Chart(document.getElementById('classChart'), {
         labels: ['Konsep Pecahan', 'Penjumlahan Pecahan', 'Persentase & Desimal', 'HTML & CSS', 'API & HTTP', 'Basis Data & 3NF', 'Konsep AI Adaptif', 'Prompt & Etika AI'],
         datasets: [{
             label: 'Rata-rata Nilai Kelas',
-            data: [86, 58, 72, 84, 76, 68, 82, 78],
+            data: [88, 56, 72, 84, 76, 68, 84, 78],
             backgroundColor: ['#198754', '#dc3545', '#ffc107', '#198754', '#ffc107', '#ffc107', '#198754', '#ffc107']
         }]
     },

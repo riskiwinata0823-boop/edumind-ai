@@ -43,8 +43,9 @@ $questions = getQuizQuestionsByTopic($topicId);
     <div class="row g-4">
         <div class="col-lg-7">
             <div class="card shadow-sm border-0">
-                <div class="card-header bg-white fw-bold">
+                <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
                     <span>Latihan Kuis Pilihan Ganda (<?= count($questions) ?> Soal)</span>
+                    <span class="badge bg-primary" id="answeredCounter">Terjawab: 0 / <?= count($questions) ?></span>
                 </div>
                 <div class="card-body">
                     <form id="quizForm">
@@ -53,7 +54,7 @@ $questions = getQuizQuestionsByTopic($topicId);
                                 <p class="fw-bold mb-2"><?= ($idx + 1) . '. ' . htmlspecialchars($q['question']) ?> <span class="badge bg-light text-dark border"><?= htmlspecialchars($q['difficulty']) ?></span></p>
                                 <?php foreach ($q['options'] as $label => $opt): ?>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="q_<?= $q['id'] ?>" id="q<?= $q['id'] ?>_<?= $label ?>" value="<?= $label ?>">
+                                        <input class="form-check-input quiz-radio" type="radio" name="q_<?= $q['id'] ?>" id="q<?= $q['id'] ?>_<?= $label ?>" value="<?= $label ?>">
                                         <label class="form-check-label" for="q<?= $q['id'] ?>_<?= $label ?>">
                                             <strong><?= $label ?>.</strong> <?= htmlspecialchars($opt['text']) ?>
                                         </label>
@@ -68,7 +69,7 @@ $questions = getQuizQuestionsByTopic($topicId);
         </div>
 
         <div class="col-lg-5">
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm border-0 sticky-top" style="top: 80px; max-height: 85vh; overflow-y: auto;">
                 <div class="card-header bg-white fw-bold">Hasil Evaluasi, Pemetaan & Rekomendasi</div>
                 <div class="card-body" id="resultPanel">
                     <p class="text-muted small mb-0">Kerjakan <?= count($questions) ?> soal di sebelah kiri lalu kirim jawaban untuk melihat skor, status penguasaan, pembahasan tiap soal, dan rekomendasi jalur belajar.</p>
@@ -86,6 +87,15 @@ setInterval(() => {
     const s = String(seconds % 60).padStart(2, '0');
     document.getElementById('timerBadge').textContent = `${m}:${s}`;
 }, 1000);
+
+const totalQuestions = <?= count($questions) ?>;
+document.querySelectorAll('.quiz-radio').forEach(el => {
+    el.addEventListener('change', () => {
+        const answered = new Set();
+        document.querySelectorAll('.quiz-radio:checked').forEach(c => answered.add(c.name));
+        document.getElementById('answeredCounter').textContent = `Terjawab: ${answered.size} / ${totalQuestions}`;
+    });
+});
 
 document.getElementById('quizForm').addEventListener('submit', async (e) => {
     e.preventDefault();

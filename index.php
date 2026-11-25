@@ -49,7 +49,7 @@ foreach ($topics as $t) {
                 <div class="d-flex flex-wrap gap-3">
                     <a href="login.php" class="btn btn-primary btn-lg px-4">Masuk ke Platform</a>
                     <a href="register.php" class="btn btn-outline-light btn-lg px-4">Daftar Akun Siswa</a>
-                    <a href="docs/ROADMAP_EDUMIND_AI.md" class="btn btn-outline-info btn-lg px-4">Lihat Roadmap</a>
+                    <a href="roadmap.php" class="btn btn-outline-info btn-lg px-4">Lihat Roadmap</a>
                 </div>
             </div>
             <div class="col-lg-5">
@@ -66,7 +66,7 @@ foreach ($topics as $t) {
                         </div>
                         <div>
                             <span class="badge bg-primary me-2">Siswa</span>
-                            <span class="small text-muted">Akses <?= $totalMaterials ?> materi, <?= $totalQuestions ?> soal kuis adaptif, rekomendasi belajar, dan Asisten AI.</span>
+                            <span class="small text-muted">Akses <?= $totalMaterials ?> materi, <?= $totalQuestions ?> soal kuis adaptif (25 soal/topik), rekomendasi belajar, dan Asisten AI.</span>
                         </div>
                     </div>
                 </div>

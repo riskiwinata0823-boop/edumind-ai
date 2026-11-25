@@ -33,9 +33,7 @@ $topicId = isset($_GET['topic_id']) ? (int)$_GET['topic_id'] : 2;
                     <label class="form-label small fw-bold">Topik Konteks Materi</label>
                     <select id="aiTopic" class="form-select form-select-sm">
                         <?php foreach ($topics as $t): ?>
-                            <option value="<?= (int)$t['id'] ?>" <?= (int)$t['id'] === $topicId ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($t['title']) ?>
-                            </option>
+                            <option value="<?= (int)$t['id'] ?>" <?= (int)$t['id'] === $topicId ? 'selected' : '' ?>><?= htmlspecialchars($t['title']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

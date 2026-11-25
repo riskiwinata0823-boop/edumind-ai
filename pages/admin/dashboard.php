@@ -39,9 +39,7 @@ foreach ($topics as $t) {
         <div class="card-header bg-white fw-bold">Daftar Akun & Peran Terdaftar</div>
         <div class="card-body table-responsive">
             <table class="table table-bordered align-middle mb-0">
-                <thead class="table-light">
-                    <tr><th>Nama</th><th>Email</th><th>Role</th><th>Status</th></tr>
-                </thead>
+                <thead class="table-light"><tr><th>Nama</th><th>Email</th><th>Role</th><th>Status</th></tr></thead>
                 <tbody>
                     <?php foreach (demoUsers() as $du): ?>
                         <tr>
