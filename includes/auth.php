@@ -57,12 +57,12 @@ function authenticateUser(string $email, string $password): ?array {
             $stmt = $pdo->prepare("SELECT id, name, email, password_hash, role, status FROM users WHERE email = :email LIMIT 1");
             $stmt->execute(['email' => trim($email)]);
             $user = $stmt->fetch();
-            if ($user && $user['status'] === 'aktif' && password_verify($password, $user['password_hash'])) {
+            if ($user && ($user['status'] ?? 'aktif') === 'aktif' && password_verify($password, $user['password_hash'])) {
                 unset($user['password_hash']);
                 return $user;
             }
         } catch (Throwable $e) {
-            // Fallback ke akun demo bila tabel belum diimpor
+            // Fallback ke akun demo
         }
     }
 

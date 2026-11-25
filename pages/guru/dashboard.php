@@ -31,7 +31,7 @@ $topics = getTopicsData();
 
     <div class="row g-3 mb-4">
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Jumlah Siswa</div><h4 class="fw-bold">3 Siswa</h4></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Rata-rata Kelas</div><h4 class="fw-bold text-primary">73,3</h4></div></div></div>
+        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Topik Tersedia</div><h4 class="fw-bold text-primary"><?= count($topics) ?> Topik</h4></div></div></div>
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Topik Paling Sulit</div><h6 class="fw-bold text-danger mt-1">Operasi Penjumlahan Pecahan</h6></div></div></div>
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Butuh Penguatan</div><h4 class="fw-bold text-warning">1 Siswa</h4></div></div></div>
     </div>
@@ -55,11 +55,11 @@ $topics = getTopicsData();
                             <span class="badge bg-danger">Belum Menguasai</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div><strong>Putri Aulia R.</strong><br><span class="text-muted">Topik: Konsep Dasar Pecahan (Skor 82)</span></div>
+                            <div><strong>Putri Aulia R.</strong><br><span class="text-muted">Topik: Konsep Dasar Pecahan (Skor 84)</span></div>
                             <span class="badge bg-success">Menguasai</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div><strong>Raffi Aditya H.</strong><br><span class="text-muted">Topik: Persentase (Skor 72)</span></div>
+                            <div><strong>Raffi Aditya H.</strong><br><span class="text-muted">Topik: Persentase & Perbandingan (Skor 72)</span></div>
                             <span class="badge bg-warning text-dark">Perlu Penguatan</span>
                         </li>
                     </ul>
@@ -72,11 +72,11 @@ $topics = getTopicsData();
 new Chart(document.getElementById('classChart'), {
     type: 'bar',
     data: {
-        labels: ['Konsep Dasar Pecahan', 'Operasi Penjumlahan Pecahan', 'Persentase & Perbandingan'],
+        labels: ['Konsep Dasar Pecahan', 'Penjumlahan Pecahan', 'Persentase & Perbandingan', 'Dasar HTML & CSS', 'Logika, API & DB'],
         datasets: [{
             label: 'Rata-rata Nilai Kelas',
-            data: [84, 58, 72],
-            backgroundColor: ['#198754', '#dc3545', '#ffc107']
+            data: [84, 58, 72, 82, 76],
+            backgroundColor: ['#198754', '#dc3545', '#ffc107', '#198754', '#ffc107']
         }]
     },
     options: { scales: { y: { beginAtZero: true, max: 100 } } }

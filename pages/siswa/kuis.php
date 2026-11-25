@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../includes/auth.php';
 require_once __DIR__ . '/../../includes/learning_data.php';
 requireRole(['siswa'], '../../');
 $user = currentUser();
+$topics = getTopicsData();
 $topicId = isset($_GET['topic_id']) ? (int)$_GET['topic_id'] : 2;
 $questions = getQuizQuestionsByTopic($topicId);
 ?>
@@ -17,7 +18,7 @@ $questions = getQuizQuestionsByTopic($topicId);
 <body class="bg-light">
 <nav class="navbar navbar-dark bg-primary px-4">
     <span class="navbar-brand fw-bold">EduMind AI — Sistem Kuis & Penilaian Adaptif</span>
-    <div class="d-flex gap-2">
+    <div class="d-flex gap-2 flex-wrap">
         <a href="dashboard.php" class="btn btn-sm btn-outline-light">Dashboard</a>
         <a href="materi.php?topic_id=<?= $topicId ?>" class="btn btn-sm btn-light">Materi</a>
         <a href="../../logout.php" class="btn btn-sm btn-outline-light">Logout</a>
@@ -25,12 +26,25 @@ $questions = getQuizQuestionsByTopic($topicId);
 </nav>
 
 <div class="container py-4">
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <span class="small fw-bold text-muted">Pilih Topik Kuis:</span>
+                <?php foreach ($topics as $t): ?>
+                    <a href="kuis.php?topic_id=<?= (int)$t['id'] ?>" class="btn btn-sm <?= (int)$t['id'] === $topicId ? 'btn-primary' : 'btn-outline-secondary' ?>">
+                        <?= htmlspecialchars($t['title']) ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+            <span class="badge bg-secondary" id="timerBadge">00:00</span>
+        </div>
+    </div>
+
     <div class="row g-4">
         <div class="col-lg-7">
             <div class="card shadow-sm border-0">
-                <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
-                    <span>Latihan Kuis Pilihan Ganda (Topik ID: <?= $topicId ?>)</span>
-                    <span class="badge bg-secondary" id="timerBadge">00:00</span>
+                <div class="card-header bg-white fw-bold">
+                    <span>Latihan Kuis Pilihan Ganda (<?= count($questions) ?> Soal)</span>
                 </div>
                 <div class="card-body">
                     <form id="quizForm">
@@ -57,7 +71,7 @@ $questions = getQuizQuestionsByTopic($topicId);
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white fw-bold">Hasil Evaluasi, Pemetaan & Rekomendasi</div>
                 <div class="card-body" id="resultPanel">
-                    <p class="text-muted small mb-0">Kerjakan soal di sebelah kiri lalu kirim jawaban untuk melihat skor, status penguasaan, pembahasan, dan rekomendasi jalur belajar.</p>
+                    <p class="text-muted small mb-0">Kerjakan soal di sebelah kiri lalu kirim jawaban untuk melihat skor, status penguasaan, pembahasan tiap soal, dan rekomendasi jalur belajar.</p>
                 </div>
             </div>
         </div>

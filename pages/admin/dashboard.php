@@ -4,6 +4,7 @@ require_once __DIR__ . '/../../includes/learning_data.php';
 requireRole(['admin'], '../../');
 $user = currentUser();
 $subjects = getSubjectsData();
+$topics = getTopicsData();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -26,7 +27,7 @@ $subjects = getSubjectsData();
     <div class="row g-3 mb-4">
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Total Pengguna</div><h4 class="fw-bold">5 Akun</h4></div></div></div>
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Kelas Aktif</div><h4 class="fw-bold">1 Kelas (MI-3A)</h4></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Mata Pelajaran</div><h4 class="fw-bold"><?= count($subjects) ?> Mapel</h4></div></div></div>
+        <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Mata Pelajaran & Topik</div><h4 class="fw-bold"><?= count($subjects) ?> Mapel / <?= count($topics) ?> Topik</h4></div></div></div>
         <div class="col-md-3"><div class="card shadow-sm border-0"><div class="card-body"><div class="text-muted small">Kebijakan RBAC</div><h4 class="fw-bold text-success">Aktif</h4></div></div></div>
     </div>
 

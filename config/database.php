@@ -1,5 +1,4 @@
 <?php
-// Konfigurasi koneksi database EduMind AI (mendukung MySQL/PDO dengan fallback aman mode demo)
 define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
 define('DB_NAME', getenv('DB_NAME') ?: 'edumind_ai');
 define('DB_USER', getenv('DB_USER') ?: 'root');

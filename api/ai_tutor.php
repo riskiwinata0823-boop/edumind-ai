@@ -16,19 +16,25 @@ foreach ($topics as $t) {
     }
 }
 
-$lower = strtolower($message);
-$prefix = "[Konteks Materi: {$activeTopic['title']} — {$activeTopic['material_title']}]\n";
+$firstMaterial = $activeTopic['materials'][0] ?? [
+    'title' => $activeTopic['title'],
+    'content' => $activeTopic['learning_objectives'],
+    'summary' => $activeTopic['learning_objectives']
+];
 
-if (str_contains($lower, 'pecahan') || str_contains($lower, 'pizza') || $mode === 'sederhana') {
-    $body = "Penjelasan sederhana: Bayangkan 1 loyang pizza dibagi menjadi 4 bagian sama besar (penyebut = 4). Jika kamu mengambil 1 potong, bagianmu adalah 1/4. Untuk menjumlahkan 1/2 + 1/4, samakan dulu potongan menjadi per-4 (1/2 = 2/4), sehingga 2/4 + 1/4 = 3/4.";
-} elseif (str_contains($lower, 'kpk') || str_contains($lower, 'penyebut') || str_contains($lower, 'jumlah')) {
-    $body = "Untuk menjumlahkan pecahan berpenyebut berbeda: 1) Cari KPK penyebut (misal KPK 2 dan 4 adalah 4). 2) Ubah pecahan agar penyebutnya sama (1/2 menjadi 2/4). 3) Jumlahkan pembilangnya saja (2/4 + 1/4 = 3/4).";
-} elseif ($mode === 'contoh_soal') {
+$lower = strtolower($message);
+$prefix = "[Konteks Materi: {$activeTopic['subject_name']} — {$activeTopic['title']}]\n";
+
+if ($mode === 'sederhana' || str_contains($lower, 'sederhana') || str_contains($lower, 'pizza')) {
+    $body = "Penjelasan sederhana: Bayangkan 1 loyang pizza dibagi menjadi 4 bagian sama besar (penyebut = 4). Jika kamu mengambil 1 potong, bagianmu adalah 1/4. Untuk menjumlahkan 1/2 + 1/4, samakan dulu potongan menjadi per-4 (1/2 = 2/4), lalu jumlahkan: 2/4 + 1/4 = 3/4.";
+} elseif ($mode === 'contoh_soal' || str_contains($lower, 'contoh') || str_contains($lower, 'soal')) {
     $body = "Contoh soal latihan: Hitunglah 1/3 + 1/6. KPK dari 3 dan 6 adalah 6, maka 1/3 = 2/6. Hasilnya: 2/6 + 1/6 = 3/6 = 1/2.";
-} elseif ($mode === 'bahas_salah') {
-    $body = "Evaluasi kesalahan umum: Menjumlahkan pembilang dengan pembilang dan penyebut dengan penyebut (seperti 1/2 + 1/4 = 2/6) tidak tepat karena ukuran bagiannya berbeda. Selalu samakan penyebut terlebih dahulu.";
+} elseif ($mode === 'bahas_salah' || str_contains($lower, 'salah') || str_contains($lower, 'keliru')) {
+    $body = "Pembahasan kesalahan umum: Menjumlahkan pembilang dengan pembilang dan penyebut dengan penyebut (misal 1/2 + 1/4 = 2/6) tidak tepat karena besar tiap bagian berbeda. Selalu samakan penyebut menggunakan KPK terlebih dahulu.";
+} elseif (str_contains($lower, 'kpk') || str_contains($lower, 'penyebut') || str_contains($lower, 'pembilang')) {
+    $body = "Pembilang berada di atas (menunjukkan bagian yang diambil) dan penyebut di bawah (menunjukkan total bagian sama besar). Untuk menjumlahkan pecahan berpenyebut berbeda, cari KPK penyebut terlebih dahulu.";
 } else {
-    $body = $activeTopic['material_content'] . " Ringkasannya: " . $activeTopic['summary_notes'] . ".";
+    $body = $firstMaterial['content'] . " Ringkasannya: " . $firstMaterial['summary'];
 }
 
 echo json_encode([

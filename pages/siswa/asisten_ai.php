@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/learning_data.php';
 requireRole(['siswa'], '../../');
 $user = currentUser();
+$topics = getTopicsData();
 $topicId = isset($_GET['topic_id']) ? (int)$_GET['topic_id'] : 2;
 ?>
 <!DOCTYPE html>
@@ -28,6 +30,16 @@ $topicId = isset($_GET['topic_id']) ? (int)$_GET['topic_id'] : 2;
         <div class="card-body">
             <div class="row g-2 mb-3">
                 <div class="col-md-4">
+                    <label class="form-label small fw-bold">Topik Konteks Materi</label>
+                    <select id="aiTopic" class="form-select form-select-sm">
+                        <?php foreach ($topics as $t): ?>
+                            <option value="<?= (int)$t['id'] ?>" <?= (int)$t['id'] === $topicId ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($t['title']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
                     <label class="form-label small fw-bold">Mode Bantuan AI</label>
                     <select id="aiMode" class="form-select form-select-sm">
                         <option value="jelaskan">Jelaskan Materi</option>
@@ -36,14 +48,14 @@ $topicId = isset($_GET['topic_id']) ? (int)$_GET['topic_id'] : 2;
                         <option value="bahas_salah">Bahas Kesalahan Umum</option>
                     </select>
                 </div>
-                <div class="col-md-8 d-flex align-items-end gap-2 flex-wrap">
-                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="quickPrompt('Jelaskan materi pecahan dengan bahasa sederhana')">Contoh: Sederhanakan Pecahan</button>
-                    <button type="button" class="btn btn-sm btn-outline-success" onclick="quickPrompt('Bagaimana cara menjumlahkan pecahan pakai KPK?')">Contoh: Cara KPK</button>
+                <div class="col-md-4 d-flex align-items-end gap-2 flex-wrap">
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="quickPrompt('Jelaskan dengan bahasa sederhana')">Sederhanakan</button>
+                    <button type="button" class="btn btn-sm btn-outline-success" onclick="quickPrompt('Berikan contoh soal dan pembahasan')">Contoh Soal</button>
                 </div>
             </div>
 
             <div id="chatWindow" class="border rounded p-3 mb-3 bg-white" style="height: 300px; overflow-y: auto;">
-                <div class="text-muted small">Halo <?= htmlspecialchars($user['name']) ?>! Tanyakan materi pembelajaran, minta penjelasan sederhana, atau minta contoh soal.</div>
+                <div class="text-muted small">Halo <?= htmlspecialchars($user['name']) ?>! Pilih topik dan mode bantuan, lalu tanyakan materi yang ingin kamu pahami.</div>
             </div>
 
             <div class="input-group">
@@ -66,6 +78,7 @@ async function sendPrompt() {
     if (!text) return;
 
     const mode = document.getElementById('aiMode').value;
+    const selectedTopic = parseInt(document.getElementById('aiTopic').value);
     const win = document.getElementById('chatWindow');
     win.innerHTML += `<div class="mb-2 text-end"><span class="badge bg-primary text-wrap text-start p-2">Siswa: ${text}</span></div>`;
     input.value = '';
@@ -73,7 +86,7 @@ async function sendPrompt() {
     const res = await fetch('../../api/ai_tutor.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, mode: mode, topic_id: <?= $topicId ?> })
+        body: JSON.stringify({ message: text, mode: mode, topic_id: selectedTopic })
     });
     const data = await res.json();
     const formattedReply = data.reply.replace(/\n/g, '<br>');
